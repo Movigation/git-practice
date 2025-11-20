@@ -56,7 +56,7 @@ git checkout -b feature/fe-작업명       예) feature/fe-login
 
 ---
 
-### 4. PUSH
+### 4. PUSH (최초 1회는 -u 필요)
 
 ```bash
 git push -u origin feature/fe-작업명
@@ -90,7 +90,7 @@ git checkout -b feature/be-작업명       예) feature/be-search-api
 
 ---
 
-### 4. PUSH
+### 4. PUSH (최초 1회는 -u 필요)
 
 ```bash
 git push -u origin feature/be-작업명
