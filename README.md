@@ -22,6 +22,21 @@ be-dev
 
 ---
 
+## 📌 fe-dev / be-dev에서 main merge가 필요한 상황
+
+1. PM이 공용 파일을 수정했을 때 (README, 폴더 구조, .gitignore 등)
+2. 프로젝트 전체에 영향 있는 설정이 변경됐을 때
+3. main에 내가 꼭 받아야 하는 코드가 생겼을 때
+
+그 외엔 merge main 안 해도 됩니다!
+
+```bash
+git pull
+git merge main
+```
+
+---
+
 ## 1. Git 레포지토리 클론
 
 ```bash
@@ -56,7 +71,7 @@ git checkout -b feature/fe-작업명       예) feature/fe-login
 
 ---
 
-### 4. PUSH
+### 4. PUSH (최초 1회는 -u 필요)
 
 ```bash
 git push -u origin feature/fe-작업명
@@ -90,7 +105,7 @@ git checkout -b feature/be-작업명       예) feature/be-search-api
 
 ---
 
-### 4. PUSH
+### 4. PUSH (최초 1회는 -u 필요)
 
 ```bash
 git push -u origin feature/be-작업명
