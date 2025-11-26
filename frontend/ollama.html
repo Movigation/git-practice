@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ollama - Run AI Locally</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #667eea 0%,
+          #764ba2 50%,
+          #f093fb 100%
+        );
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        overflow: hidden;
+      }
+
+      .floating-shapes {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .shape {
+        position: absolute;
+        border-radius: 50%;
+        animation: float 20s infinite ease-in-out;
+      }
+
+      .shape1 {
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.1);
+        top: 10%;
+        left: 10%;
+        animation-delay: 0s;
+      }
+
+      .shape2 {
+        width: 120px;
+        height: 120px;
+        background: rgba(255, 255, 255, 0.08);
+        top: 60%;
+        right: 15%;
+        animation-delay: 3s;
+      }
+
+      .shape3 {
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.12);
+        bottom: 20%;
+        left: 20%;
+        animation-delay: 6s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-30px) rotate(180deg);
+        }
+      }
+
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 30px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        animation: slideIn 0.8s ease;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9) translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      .header {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        padding: 60px 40px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 70%
+        );
+        animation: pulse 3s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+        50% {
+          transform: scale(1.1);
+          opacity: 0.8;
+        }
+      }
+
+      .logo-wrapper {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 30px;
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .logo-wrapper img {
+        width: 180px;
+        height: auto;
+        filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+        transition: transform 0.3s ease;
+      }
+
+      .logo-wrapper:hover img {
+        transform: scale(1.1) rotate(5deg);
+      }
+
+      .glow-effect {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(
+          circle,
+          rgba(102, 126, 234, 0.4) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        animation: glow 2s infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          opacity: 0.5;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1.2);
+        }
+      }
+
+      .content {
+        padding: 50px 40px;
+      }
+
+      .title {
+        font-size: 2.5em;
+        font-weight: bold;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .subtitle {
+        font-size: 1.3em;
+        color: #666;
+        text-align: center;
+        margin-bottom: 40px;
+        line-height: 1.6;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+      }
+
+      .feature-card {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+      }
+
+      .feature-icon {
+        font-size: 3em;
+        margin-bottom: 15px;
+      }
+
+      .feature-title {
+        font-size: 1.3em;
+        font-weight: bold;
+        color: #2d3748;
+        margin-bottom: 10px;
+      }
+
+      .feature-desc {
+        color: #718096;
+        line-height: 1.6;
+      }
+
+      .cta-section {
+        text-align: center;
+        padding: 30px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        margin-top: 30px;
+      }
+
+      .cta-button {
+        display: inline-block;
+        padding: 18px 40px;
+        background: #fff;
+        color: #667eea;
+        font-size: 1.2em;
+        font-weight: bold;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .cta-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .terminal {
+        background: #1e1e1e;
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 30px;
+        box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .terminal-header {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+
+      .terminal-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+
+      .dot-red {
+        background: #ff5f56;
+      }
+      .dot-yellow {
+        background: #ffbd2e;
+      }
+      .dot-green {
+        background: #27c93f;
+      }
+
+      .terminal-content {
+        font-family: "Courier New", monospace;
+        color: #0f0;
+        font-size: 0.95em;
+        line-height: 1.8;
+      }
+
+      .terminal-prompt {
+        color: #888;
+      }
+
+      .terminal-command {
+        color: #0f0;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          border-radius: 20px;
+        }
+
+        .header {
+          padding: 40px 25px;
+        }
+
+        .logo-wrapper img {
+          width: 120px;
+        }
+
+        .content {
+          padding: 30px 25px;
+        }
+
+        .title {
+          font-size: 2em;
+        }
+
+        .subtitle {
+          font-size: 1.1em;
+        }
+
+        .features {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="floating-shapes">
+      <div class="shape shape1"></div>
+      <div class="shape shape2"></div>
+      <div class="shape shape3"></div>
+    </div>
+
+    <div class="container">
+      <div class="header">
+        <div class="glow-effect"></div>
+        <div class="logo-wrapper">
+          <img src="images/ollama.png" alt="Ollama Logo" />
+        </div>
+      </div>
+
+      <div class="content">
+        <h1 class="title">Ollama로 로컬 AI 실행하기</h1>
+        <p class="subtitle">
+          강력한 대규모 언어 모델을 로컬에서 쉽게 실행하고 관리하세요.<br />
+          클라우드 없이도 AI의 힘을 경험할 수 있습니다.
+        </p>
+
+        <div class="features">
+          <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <div class="feature-title">빠른 설치</div>
+            <div class="feature-desc">간단한 명령어로 몇 초 만에 설치 완료</div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <div class="feature-title">개인정보 보호</div>
+            <div class="feature-desc">데이터가 외부로 전송되지 않아 안전</div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-title">고성능</div>
+            <div class="feature-desc">최적화된 로컬 실행으로 빠른 응답</div>
+          </div>
+        </div>
+
+        <div class="terminal">
+          <div class="terminal-header">
+            <div class="terminal-dot dot-red"></div>
+            <div class="terminal-dot dot-yellow"></div>
+            <div class="terminal-dot dot-green"></div>
+          </div>
+          <div class="terminal-content">
+            <div>
+              <span class="terminal-prompt">$</span>
+              <span class="terminal-command">ollama run llama2</span>
+            </div>
+            <div>>>> AI 모델이 성공적으로 실행되었습니다!</div>
+            <div>&nbsp;</div>
+            <div>
+              <span class="terminal-prompt">$</span>
+              <span class="terminal-command">ollama list</span>
+            </div>
+            <div>llama2:latest 3.8 GB 2 days ago</div>
+            <div>codellama:latest 3.8 GB 5 days ago</div>
+          </div>
+        </div>
+
+        <div class="cta-section">
+          <h2 style="color: #fff; font-size: 1.8em; margin-bottom: 20px">
+            지금 시작하세요
+          </h2>
+          <a href="#" class="cta-button">Download Ollama</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
