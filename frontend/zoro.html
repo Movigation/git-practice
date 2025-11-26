@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zoro - One Piece</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1000px;
+        width: 100%;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #000 0%, #333 100%);
+        color: #fff;
+        padding: 30px;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .header p {
+        font-size: 1.2em;
+        opacity: 0.9;
+      }
+
+      .content {
+        padding: 40px;
+        background: #f5f5f5;
+      }
+
+      .image-wrapper {
+        position: relative;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+      }
+
+      .image-wrapper:hover {
+        transform: scale(1.02);
+      }
+
+      .image-wrapper img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .caption {
+        margin-top: 30px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .caption h2 {
+        color: #333;
+        margin-bottom: 15px;
+        font-size: 1.8em;
+      }
+
+      .caption p {
+        color: #666;
+        line-height: 1.8;
+        font-size: 1.1em;
+      }
+
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 2em;
+        }
+
+        .content {
+          padding: 20px;
+        }
+
+        .caption h2 {
+          font-size: 1.5em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>RORONOA ZORO</h1>
+        <p>ONE PIECE</p>
+      </div>
+
+      <div class="content">
+        <div class="image-wrapper">
+          <img src="images/zoro.jpg" alt="Roronoa Zoro" />
+        </div>
+
+        <div class="caption">
+          <h2>나 너무 많은 일이 있었어</h2>
+          <p>원피스의 주요 캐릭터 중 한 명인 조로의 명장면입니다.</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>씹덕 밈</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Malgun Gothic", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .card {
+        max-width: 600px;
+        width: 100%;
+        background: #fff;
+        border-radius: 25px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .image-container {
+        position: relative;
+        background: #f8f9fa;
+        padding: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .image-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(248, 249, 250, 1) 100%
+        );
+        pointer-events: none;
+      }
+
+      .image-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+      }
+
+      .image-wrapper:hover {
+        transform: scale(1.05) rotate(2deg);
+      }
+
+      .image-wrapper img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .content {
+        padding: 35px;
+        text-align: center;
+      }
+
+      .content h1 {
+        font-size: 2.2em;
+        color: #2d3748;
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+
+      .content p {
+        font-size: 1.1em;
+        color: #718096;
+        line-height: 1.6;
+        margin-bottom: 25px;
+      }
+
+      .tags {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .tag {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #fff;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        font-weight: 500;
+        transition: transform 0.2s ease;
+      }
+
+      .tag:hover {
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 768px) {
+        .card {
+          border-radius: 20px;
+        }
+
+        .image-container {
+          padding: 30px;
+        }
+
+        .content {
+          padding: 25px;
+        }
+
+        .content h1 {
+          font-size: 1.8em;
+        }
+
+        .content p {
+          font-size: 1em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="image-container">
+        <div class="image-wrapper">
+          <img src="images/10duck.png" alt="씹덕 밈" />
+        </div>
+      </div>
+
+      <div class="content">
+        <h1>전형적인 오타쿠</h1>
+        <p>그것이 접니다.</p>
+
+        <div class="tags">
+          <div class="tag">#밈</div>
+          <div class="tag">#오타쿠</div>
+          <div class="tag">#커뮤니티</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
