@@ -1,0 +1,23 @@
+# backend/.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+env/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Data files (크롤링 데이터)
+data/*.json
+!data/.gitkeep
+
+# Database
+*.db
+*.sqlite
+
+# Logs
+*.log
